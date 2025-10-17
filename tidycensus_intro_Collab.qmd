@@ -293,7 +293,29 @@ girafe(ggobj = oahu_education_map, width = 700, height = 400)
 ### Time Series
 
 ```{r, message=FALSE, warning=FALSE, results='hide'}
+years <- 2014:2018  # specify years
+names(years) <- years
 
+oahu_education_2014_2023 <- map_dfr(years, ~{
+  get_acs(
+    geography = "county",
+    variables = c(percent_bachelors = "DP02_0068P"),  # % 25+ with Bachelor's or higher
+    state = "HI",
+    county = "Honolulu",
+    year = .x,
+    survey = "acs5")
+}, .id = "year")
+
+
+ggplot(oahu_education_2014_2023, aes(x = year, y = estimate, group = 1)) + 
+  geom_line(color = "red", size = 1) + 
+  geom_point(color = "red", size = 2) +
+  labs(
+    title = "Honolulu County Educational Attainment (ACS Rolling 4-year Estimates)",
+    x = "ACS Release Year (4-year window)",
+    y = "Percent with Bachelor's Degree or Higher"
+  ) +
+  theme_minimal()
 
 ```
 
