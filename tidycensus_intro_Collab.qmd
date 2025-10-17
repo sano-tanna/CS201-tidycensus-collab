@@ -277,7 +277,16 @@ oahu_education <- get_acs(
 ### Mapping
 
 ```{r, message=FALSE, warning=FALSE, results='hide'}
+oahu_education_map <- ggplot(oahu_education) +
+  geom_sf_interactive(
+    aes(
+      fill = percent_bachelorsE,
+      tooltip = paste(NAME, ": ", percent_bachelorsE, "%"),
+      data_id = NAME)) +
+  scale_fill_viridis_c(option = "plasma") +
+  theme_void() 
 
+girafe(ggobj = oahu_education_map, width = 700, height = 400)
 
 ```
 
