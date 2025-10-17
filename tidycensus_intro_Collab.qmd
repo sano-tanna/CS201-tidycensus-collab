@@ -321,11 +321,30 @@ ggplot(oahu_education_2014_2023, aes(x = year, y = estimate, group = 1)) +
 
 ### Scatter Plot
 
-Exploring the relationship between (insert variable here) and (insert variable here) with a scatter plot
+Exploring the relationship between Educational Attainment and Gross Rent with a scatter plot
 
 ```{r, message=FALSE, warning=FALSE, results='hide'}
+oahu_family_rent_and_education <- get_acs(
+  geography = "tract",
+  variables = c(median_rent = "DP04_0134E",
+                percent_bachelorsE = "DP02_0068PE"),
+  state = "HI",
+  county = "Honolulu",
+  geometry = TRUE,
+  output = "wide",
+  year = 2023) %>% 
+  dplyr::filter(GEOID != "15003981200" & GEOID !="15003981900")
 
-
+ggplot(oahu_family_rent_and_education, aes(x = median_rent,y = percent_bachelorsE)) +
+  geom_point() +
+  geom_smooth() + # adds a regression line (LOESS)
+  stat_cor() + # prints R and p
+  theme_minimal() + 
+  labs(title = "Comparing Rates of Higher Education to rent, Honolulu County",
+       subtitle = "ACS 5-year, 2023 release",
+       x = "median rent in Honolulu County",
+       y = "Percent with a BA or higher",
+       caption = "Shaded area represents margin of error around the estimate")
 ```
 
 ### Describe what you found
