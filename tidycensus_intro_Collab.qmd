@@ -261,7 +261,16 @@ REMEMBER! [Pull]{.underline} before working in the `-collab.qmd` file. [Save, Co
 Investigating (insert variable here) on Oahu at the census tract level.
 
 ```{r, message=FALSE, warning=FALSE, results='hide'}
-
+oahu_education <- get_acs(
+  geography = "tract",
+  variables = c(percent_bachelors = "DP02_0068P"),
+  state = "HI",
+  county = "Honolulu",
+  geometry = TRUE,
+  output = "wide",
+  year = 2023
+) %>%
+  dplyr::filter(GEOID != "15003981200" & GEOID != "15003981900")
 
 ```
 
