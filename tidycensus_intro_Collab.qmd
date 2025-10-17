@@ -109,12 +109,45 @@ Now let's look at family poverty in Honolulu County over time
 ## Try an example of your own
 
 ```{r}
-# get the data
+oahu_poverty <- get_acs(
+  geography = "tract",
+  variables = c(percent_poverty = "DP03_0119P"),
+  state = "HI",
+  county = "Honolulu",
+  geometry = TRUE,
+  output = "wide",
+  year = 2023) %>% 
+  dplyr::filter(GEOID != "15003981200" & GEOID !="15003981900")
 
 
-# map it
 
+# Change names and use only GEOID for UH and Cham
+oahu_universities <- oahu_poverty %>%
+  filter(
+    GEOID == "15003002701" | GEOID == "15003002801"
+  ) %>%
+  mutate(
+    NAME = case_when(
+      GEOID == "15003002701" ~ "UH Mānoa",
+      GEOID == "15003002801" ~ "Chaminade University",
+      TRUE ~ NAME
+    )
+  )
 
+# zoom into just two schools with interactive map
+oahu_uni_map <- ggplot(oahu_universities) +
+  geom_sf_interactive(
+    aes(
+      fill = percent_povertyE,
+      tooltip = paste(NAME, ": ", percent_povertyE, "%"),
+      data_id = NAME
+    )
+  ) +
+  scale_fill_viridis_c(option = "plasma") +
+  theme_void()
+
+# Make the interactive map
+girafe(ggobj = oahu_uni_map, width_svg = 7, height_svg = 4)
 ```
 
 ## Back to Exploring Poverty...
