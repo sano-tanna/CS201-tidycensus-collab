@@ -319,6 +319,8 @@ ggplot(oahu_education_2014_2023, aes(x = year, y = estimate, group = 1)) +
 
 ```
 
+\*Data Missing leading to severe drop in educational attainment after 2019.
+
 ### Scatter Plot
 
 Exploring the relationship between Educational Attainment and Gross Rent with a scatter plot
