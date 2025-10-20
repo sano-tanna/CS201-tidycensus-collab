@@ -350,3 +350,5 @@ ggplot(oahu_family_rent_and_education, aes(x = median_rent,y = percent_bachelors
 ```
 
 ### Describe what you found
+
+Looking at the scatter plot, we can see there is a small correlation between the educational attainment within specific Honolulu Countys and gross rent in those counties. I think this is accurate and makes a lot pof rent because for the most part the higher education you attain, the better your job opportunities will be. This is not always the case, but in general it is something that should correlate, so I think the scatter plot makes sense. The more education you have, the more opportunities open to get higher paying jobs and potentially allowing you to afford houses with higher rent.
